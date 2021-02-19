@@ -12,7 +12,13 @@ const Calc = () => {
     /**
      * Best regex for validating input during typing:
      * "(^-?([0-9]+([.,][0-9]*)?|[.][0-9]+)$)|^-?$"
+     * 
+     * Will accept 
+     *          "-" but only as first character
+     *          any numbers, no characters
+     *          exactly one "." separator (no ",")
      */
+
 
     const handleChange = (e) => {
         const regexp = "(^-?([0-9]+([.][0-9]*)?|[.][0-9]+)$)|^-?$"
@@ -32,7 +38,7 @@ const Calc = () => {
 
     /**
      * Elif branches
-     *  1. Change the latest operator and display accordingly
+     *  1. Update the latest operator and display in history field
      *  2. Put the main input to the history with the chosen operator
      *  3. Calculates the result and displays it in history with the new operator
      */
@@ -124,7 +130,9 @@ const Calc = () => {
                 step="any"
                 value={inputField}
                 onChange={handleChange}
+                autoFocus={true}
                 className="calc-screen-lower"
+                onBlur={({ target }) => target.focus()} //nem a legjobb megoldás, de ebben az esetben megfelel
             />
             <div className="memory-panel">
                 <button onClick={writeToMem}>Mem Save</button>
